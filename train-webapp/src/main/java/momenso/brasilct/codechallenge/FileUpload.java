@@ -17,7 +17,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 @Path("/files")
 public class FileUpload {
 
-	private static final String SERVER_UPLOAD_LOCATION_FOLDER = "tmp/";
+	public static final String SERVER_UPLOAD_LOCATION_FOLDER = "tmp/";
 
 	@POST
 	@Path("/upload")
