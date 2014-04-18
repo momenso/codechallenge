@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Form Page</title>
+</head>
+<body>
+<h1>Import Map Files</h1>
+    <form action="api/files/upload" method="post" enctype="multipart/form-data">
+       <p>
+        Lines : <input type="file" name="lines_file" size="50" />
+        Routes : <input type="file" name="routes_file" size="50" />
+        Stations : <input type="file" name="stations_file" size="50" />
+       </p>
+       <input type="submit" value="Upload It" />
+    </form>
+</body>
+</html>
