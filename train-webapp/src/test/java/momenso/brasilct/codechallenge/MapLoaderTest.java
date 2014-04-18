@@ -3,6 +3,7 @@ package momenso.brasilct.codechallenge;
 import junit.framework.TestCase;
 import momenso.brasilct.codechallenge.trainmap.Graph;
 import momenso.brasilct.codechallenge.trainmap.MapLoader;
+import momenso.brasilct.codechallenge.trainmap.Vertex;
 
 import org.junit.Test;
 
@@ -14,6 +15,15 @@ public class MapLoaderTest extends TestCase {
 		assertEquals(410, map.getLines().size());
 		assertEquals(13, map.getRoutes().size());
 		assertEquals(306, map.getStations().size());
+	}
+	
+	@Test
+	public void testSpecificStation() {
+		MapLoader map = MapLoader.getInstance();
+		Vertex target = map.findNodeByName("Neasden");
+		assertNotNull(target);
+		assertEquals("Neasden", target.getName());
+		assertEquals("172", target.getId());
 	}
 	
 	@Test
@@ -31,4 +41,5 @@ public class MapLoaderTest extends TestCase {
 		assertEquals(410,graph.getEdges().size());
 		assertEquals(306,graph.getVertexes().size());
 	}
+	
 }
