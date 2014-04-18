@@ -21,8 +21,8 @@ public class MapRouterTest extends TestCase {
 		MapLoader loader = MapLoader.getInstance();
 		Graph graph = loader.getGraph();
 		MapRouter router = new MapRouter(graph);
-		Vertex origin = loader.findNodeByName("Liverpool Street");
-		Vertex destination = loader.findNodeByName("Mile End");
+		Vertex origin = loader.findVertexByName("Liverpool Street");
+		Vertex destination = loader.findVertexByName("Mile End");
 		router.execute(origin);
 		List<Vertex> path = router.getPath(destination);
 
@@ -40,8 +40,8 @@ public class MapRouterTest extends TestCase {
 		MapLoader loader = MapLoader.getInstance();
 		Graph graph = loader.getGraph();
 		MapRouter router = new MapRouter(graph);
-		Vertex origin = loader.findNodeByName("Wimbledon");
-		Vertex destination = loader.findNodeByName("High Street Kensington");
+		Vertex origin = loader.findVertexByName("Wimbledon");
+		Vertex destination = loader.findVertexByName("High Street Kensington");
 		router.execute(origin);
 		List<Vertex> path = router.getPath(destination);
 		
@@ -54,8 +54,8 @@ public class MapRouterTest extends TestCase {
 		MapLoader loader = MapLoader.getInstance();
 		Graph graph = loader.getGraph();
 		MapRouter router = new MapRouter(graph);
-		Vertex origin = loader.findNodeByName("Baker Street");
-		Vertex destination = loader.findNodeByName("Green Park");
+		Vertex origin = loader.findVertexByName("Baker Street");
+		Vertex destination = loader.findVertexByName("Green Park");
 		router.execute(origin);
 		List<Vertex> path = router.getPath(destination);
 

@@ -8,6 +8,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import momenso.brasilct.codechallenge.trainmap.Graph;
 import momenso.brasilct.codechallenge.trainmap.MapLoader;
@@ -25,18 +27,28 @@ public class WebService {
 	@Path("route")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes()
-	public RoutePlan route(@QueryParam("from") final String from, @QueryParam("to") final String to) {
-		MapLoader mapLoader = MapLoader.getInstance();
-		
-		Vertex origin = mapLoader.findNodeByName(from);
-		Vertex destination = mapLoader.findNodeByName(to);
-		
-		Graph graph = mapLoader.getGraph();
-	    MapRouter router = new MapRouter(graph);
-	    router.execute(origin);
-	    List<Vertex> path = router.getPath(destination);
-		
-		return new RoutePlan(path, router.getTime(destination));
+	public Response route(@QueryParam("from") final String from, @QueryParam("to") final String to) {
+		try
+		{
+			MapLoader mapLoader = MapLoader.getInstance();
+			
+			Vertex origin = mapLoader.findVertexByName(from);
+			Vertex destination = mapLoader.findVertexByName(to);
+			
+			Graph graph = mapLoader.getGraph();
+		    MapRouter router = new MapRouter(graph);
+		    router.execute(origin);
+		    List<Vertex> path = router.getPath(destination);
+			
+			//return new RoutePlan(path, router.getTime(destination));
+		    return Response.ok(new RoutePlan(path, router.getTime(destination))).build();
+		} catch (Exception e) {
+			return Response
+				.status(400)
+				.type(MediaType.TEXT_PLAIN)
+				.entity(e.getMessage())
+				.build();
+		}
 	}
 	
     /**

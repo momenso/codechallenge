@@ -57,8 +57,8 @@ public class MapLoader {
 		for (Line line : lines) {
 			edges.add(new Edge(
 					line.toString(),
-					findNodeById(line.getStation1()),
-					findNodeById(line.getStation2()),
+					findVertexById(line.getStation1()),
+					findVertexById(line.getStation2()),
 					line.getLine(),
 					3 // default time to adjacent station
 			));
@@ -168,20 +168,20 @@ public class MapLoader {
 		}
 	}
 	
-	public Vertex findNodeById(int id) {
+	public Vertex findVertexById(int id) {
 		for (Vertex node : nodes) {
 			if (node.getId().equals(String.valueOf(id)))
 				return node;
 		}
-		throw new RuntimeException(String.format("Node id=%d not found.", id));
+		throw new RuntimeException(String.format("Vertex id=%d not found.", id));
 	}
 	
-	public Vertex findNodeByName(String name) {
+	public Vertex findVertexByName(String name) {
 		for (Vertex node : nodes) {
 			if (node.getName().equals(name))
 				return node;
 		}
-		throw new RuntimeException(String.format("Node name=%s not found.", name));
+		throw new RuntimeException(String.format("Vertex name=%s not found.", name));
 	}
 
 	public List<Line> getLines() {

@@ -20,7 +20,7 @@ public class MapLoaderTest extends TestCase {
 	@Test
 	public void testSpecificStation() {
 		MapLoader map = MapLoader.getInstance();
-		Vertex target = map.findNodeByName("Neasden");
+		Vertex target = map.findVertexByName("Neasden");
 		assertNotNull(target);
 		assertEquals("Neasden", target.getName());
 		assertEquals("172", target.getId());
