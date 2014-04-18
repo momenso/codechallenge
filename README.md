@@ -1,24 +1,29 @@
-code challenge
-==============
 
-Você foi contratado para construir um webservice REST para o metro de Londres. Você recebeu os arquivos em [1] para alimentar o banco de dados desse serviço. 
+Train Service
+=============
 
-* Você deve criar um método para importar os arquivos existentes e uma estrutura para armazenar os dados, a importação deve ser feita apenas uma vez. 
+The application implements a simple web interface for importing the train map files in CSV format and two web service methods. One used by the web interface to import the map files and the other to be queried by a mobile device requesting the route between two train stations.
 
-Ao finalizar a primeira parte, as seguintes funcionalidades foram pedidas pelo time de **mobile** para que eles possam construir uma aplicação para auxiliar no deslocamento dos passageiros. 
+![alt text](https://github.com/momenso/codechallenge/raw/master/diagram.png "Overview Diagram")
 
-1. Um método que liste um caminho (contendo todas as estações) qualquer entre a estação X e a estação Y 
-2. Um método que liste o menor caminho (contendo todas as estações) (considerando a quantidade de paradas como requisito para o menor caminho) entre a estação X e a estação Y
-3. Um método que calcule o tempo aproximando da viagem no item 2, considerando que ao passar de uma estação adjacente a próxima o passageiro gaste 3 minutos e ao trocar de linha gaste 12 minutos. 
+Once the map files are imported they are stored on the server filesystem to be used subsequently. The MapLoader class is an singleton that provides access to the map data as a graph object containing the entire train network.
 
-Observações: 
+The request format for the route between two train stations is described below. In the following example we are requesting the route between Baker Street station and Oxford Circus station.
 
-* Tanto o desenho da arquitetura do serviço assim como os testes unitários fazem parte da resolução do teste. 
-* O retorno do webservice REST deve ser em XML ou JSON 
-* O código deve ser hospedado em um repositório forkado a partir desse no github. 
-* Ao terminar o teste mande um email para techjobs@brasilct.com com seu curriculum e o link para seu repositório.
+```
+http://<server>:<port>/api/train-service/route?from=Baker+Street&to=Oxford+Circus
+```
 
+A JSON formated response is then provided as follows.
 
-Recursos: 
-[1] https://commons.wikimedia.org/wiki/London_Underground_geographic_maps/CSV (para facilitar os arquivos foram inseridos no respositório.) 
-
+```javascript
+{
+  "routePlan": {
+    "estimatedTime":6,
+    "route":[
+      {"id":"11","name":"Baker Street"},
+      {"id":"212","name":"Regent's Park"},
+      {"id":"192","name":"Oxford Circus"}
+    ]
+}}
+```
