@@ -25,6 +25,9 @@ public class MapLoader {
 	private List<Line> lines;
 	private List<Route> routes;
 	private List<Station> stations;
+	
+	private List<Vertex> nodes;
+	private List<Edge> edges;
 
 	private static MapLoader instance = null;
 
@@ -43,6 +46,22 @@ public class MapLoader {
 			loadStations();
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to load map.", e);
+		}
+		
+		nodes = new ArrayList<Vertex>();
+		for (Station station : stations) {
+			nodes.add(new Vertex(station.getId().toString(), station.getName()));
+		}
+		
+		edges = new ArrayList<Edge>();
+		for (Line line : lines) {
+			edges.add(new Edge(
+					line.toString(),
+					findNodeById(line.getStation1()),
+					findNodeById(line.getStation2()),
+					line.getLine(),
+					3 // default time to adjacent station
+			));
 		}
 	}
 
@@ -148,6 +167,22 @@ public class MapLoader {
 			}
 		}
 	}
+	
+	public Vertex findNodeById(int id) {
+		for (Vertex node : nodes) {
+			if (node.getId().equals(String.valueOf(id)))
+				return node;
+		}
+		throw new RuntimeException(String.format("Node id=%d not found.", id));
+	}
+	
+	public Vertex findNodeByName(String name) {
+		for (Vertex node : nodes) {
+			if (node.getName().equals(name))
+				return node;
+		}
+		throw new RuntimeException(String.format("Node name=%s not found.", name));
+	}
 
 	public List<Line> getLines() {
 		return lines;
@@ -159,5 +194,11 @@ public class MapLoader {
 
 	public List<Station> getStations() {
 		return stations;
+	}
+	
+	public Graph getGraph() {
+		Graph graph = new Graph(nodes, edges);
+		
+		return graph;
 	}
 }
