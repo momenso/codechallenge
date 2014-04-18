@@ -9,7 +9,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import momenso.brasilct.codechallenge.trainmap.Graph;
 import momenso.brasilct.codechallenge.trainmap.MapLoader;
@@ -40,7 +39,6 @@ public class WebService {
 		    router.execute(origin);
 		    List<Vertex> path = router.getPath(destination);
 			
-			//return new RoutePlan(path, router.getTime(destination));
 		    return Response.ok(new RoutePlan(path, router.getTime(destination))).build();
 		} catch (Exception e) {
 			return Response
