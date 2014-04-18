@@ -89,14 +89,14 @@ public class MapLoader {
 	private static CellProcessor[] getStationProcessors() {
 
 		final CellProcessor[] processors = new CellProcessor[] {
-				new NotNull(new ParseInt()), // ID
+				new NotNull(new ParseInt()), 	// ID
 				new NotNull(new ParseDouble()), // Latitude
 				new NotNull(new ParseDouble()), // Longitude
-				new NotNull(), // Name
-				new NotNull(), // Display Name
+				new NotNull(), 					// Name
+				new NotNull(), 					// Display Name
 				new NotNull(new ParseDouble()), // Zone
-				new NotNull(new ParseInt()), // Total Lines
-				new NotNull(new ParseInt()) // Rail
+				new NotNull(new ParseInt()), 	// Total Lines
+				new NotNull(new ParseInt()) 	// Rail
 		};
 		return processors;
 	}

@@ -1,5 +1,8 @@
 package momenso.brasilct.codechallenge.trainmap;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /***
  * Graph vertex
  * 
@@ -7,6 +10,7 @@ package momenso.brasilct.codechallenge.trainmap;
  *
  */
 
+@XmlRootElement
 public class Vertex {
 	private String id;
 	private String name;
@@ -18,10 +22,12 @@ public class Vertex {
 		this.name = name;
 	}
 
+	@XmlElement
 	public String getId() {
 		return id;
 	}
 
+	@XmlElement
 	public String getName() {
 		return name;
 	}
