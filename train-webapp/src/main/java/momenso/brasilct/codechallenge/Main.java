@@ -6,6 +6,12 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 
+/***
+ * Application resource configuration class
+ * 
+ * @author momenso
+ *
+ */
 @ApplicationPath("/")
 public class Main extends ResourceConfig {
 
