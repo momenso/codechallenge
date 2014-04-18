@@ -1,21 +1,15 @@
 package momenso.brasilct.codechallenge;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
 
+import momenso.brasilct.codechallenge.trainmap.RoutePlan;
+
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
-
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import momenso.brasilct.codechallenge.WebService;
-import momenso.brasilct.codechallenge.trainmap.RoutePlan;
-import momenso.brasilct.codechallenge.trainmap.Vertex;
 
 public class WebServiceTest extends JerseyTest {
 

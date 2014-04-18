@@ -35,10 +35,6 @@ public class WebService {
 	    MapRouter router = new MapRouter(graph);
 	    router.execute(origin);
 	    List<Vertex> path = router.getPath(destination);
-	    
-		for (Vertex vertex : path) {
-			System.out.println(vertex);
-		}
 		
 		return new RoutePlan(path, router.getTime(destination));
 	}

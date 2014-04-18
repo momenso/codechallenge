@@ -58,9 +58,6 @@ public class MapRouterTest extends TestCase {
 		Vertex destination = loader.findNodeByName("Green Park");
 		router.execute(origin);
 		List<Vertex> path = router.getPath(destination);
-		for (Vertex step : path) {
-			System.out.println(step);
-		}
 
 		List<Vertex> expected = new ArrayList<Vertex>();
 		expected.add(new Vertex("11", "Baker Street"));

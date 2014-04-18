@@ -6,8 +6,6 @@ import java.util.Map;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.ext.ContextResolver;
 
-import momenso.brasilct.codechallenge.trainmap.RoutePlan;
-
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.moxy.json.MoxyJsonConfig;
 import org.glassfish.jersey.moxy.json.MoxyJsonFeature;
@@ -30,7 +28,6 @@ public class Main extends ResourceConfig {
 		register(MoxyJsonFeature.class);
 		register(createMoxyJsonResolver());
 		property(ServerProperties.TRACING, TracingConfig.ON_DEMAND.name());
-		//property(ServerProperties.TRACING, "ALL");
 	}
 	
 	public static ContextResolver<MoxyJsonConfig> createMoxyJsonResolver() {
