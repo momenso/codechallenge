@@ -1,11 +1,9 @@
 Train Service
 =============
 
-The application implements a simple web interface for importing the train map files in CSV format and two web service methods. One used by the web interface to import the map files and the other to be queried by a mobile device requesting the route between two train stations.
+The application implements a simple web interface for importing the train map files in CSV format and a REST web interface. Once the map files are imported they are stored on the graph database (Neo4j). All routing on the train network is managed via the Neo4j database.
 
 ![alt text](https://github.com/momenso/codechallenge/raw/graphdb/images/diagram.png "Overview Diagram")
-
-Once the map files are imported they are stored on the graph database (Neo4j). All routing on the train network is managed via the Neo4j database.
 
 How to use
 ----------
