@@ -15,7 +15,7 @@ import momenso.brasilct.codechallenge.trainmap.Vertex;
 /**
  * Root resource (exposed at "train-service" path)
  */
-@Path("train-service")
+@Path("v1/test")
 public class WebService {
 	
 	@GET

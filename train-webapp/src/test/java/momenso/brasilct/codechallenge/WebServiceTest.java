@@ -15,6 +15,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 public class WebServiceTest extends JerseyTest {
+	
+	private String endPoint = "v1/test";
 
     @Override
     protected Application configure() {
@@ -23,14 +25,14 @@ public class WebServiceTest extends JerseyTest {
 
     @Test
     public void testGetIt() {
-        final String responseMsg = target().path("train-service").request().get(String.class);
+        final String responseMsg = target().path(endPoint).request().get(String.class);
 
         assertEquals("Hello, London Underground!", responseMsg);
     }
     
     @Test
     public void testPlanner() {
-    	final WebTarget target = target("train-service/route");
+    	final WebTarget target = target(endPoint+"/route");
     	RoutePlan plan = target
     			.queryParam("from", "Holland Park")
     			.queryParam("to", "Canada Water")
@@ -47,7 +49,7 @@ public class WebServiceTest extends JerseyTest {
     public void testRouteBetweenNonexistentStations() {
     	exception.expect(NotFoundException.class);
         
-    	final WebTarget target = target("train-service/route");
+    	final WebTarget target = target(endPoint+"route");
     	target.queryParam("from", "Armenia")
     			.queryParam("to", "Barra Funda")
     			.request()
