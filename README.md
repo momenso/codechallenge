@@ -1,10 +1,9 @@
-
 Train Service
 =============
 
 The application implements a simple web interface for importing the train map files in CSV format and two web service methods. One used by the web interface to import the map files and the other to be queried by a mobile device requesting the route between two train stations.
 
-![alt text](https://github.com/momenso/codechallenge/raw/master/diagram.png "Overview Diagram")
+![alt text](https://github.com/momenso/codechallenge/raw/graphdb/diagram.png "Overview Diagram")
 
 Once the map files are imported they are stored on the server filesystem to be used subsequently. The MapLoader class is an singleton that provides access to the map data as a graph object containing the entire train network.
 
