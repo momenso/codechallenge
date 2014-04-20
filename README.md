@@ -3,25 +3,53 @@ Train Service
 
 The application implements a simple web interface for importing the train map files in CSV format and two web service methods. One used by the web interface to import the map files and the other to be queried by a mobile device requesting the route between two train stations.
 
-![alt text](https://github.com/momenso/codechallenge/raw/graphdb/diagram.png "Overview Diagram")
+![alt text](https://github.com/momenso/codechallenge/raw/graphdb/images/diagram.png "Overview Diagram")
 
 Once the map files are imported they are stored on the graph database (Neo4j). All routing on the train network is managed via the Neo4j database.
 
-The request format for the route between two train stations is described below. In the following example we are requesting the route between Baker Street station and Oxford Circus station.
+How to use
+----------
+
+Once the application is started for the first time it is necessary to import the map files. This can be done by navigating to the server web address and upload the required CSV files.
+
+![alt text](https://github.com/momenso/codechallenge/raw/graphdb/images/uploadform.png "Upload Form")
+
+When the upload is complete, the database is updated and the service is ready to respond to routing queries.
+
+The list of stations between an origin and destination can be obtained with the following REST call:
 ```
-http://<server>:<port>/api/train-service/route?from=Baker+Street&to=Oxford+Circus
+/api/v1/test/route/{origin}/{destination}
+```
+Where _{origin}_ and _{destination}_ are station IDs.
+
+A test method is available for querying routes between two train stations by name. In the following example we are requesting the route between Queensway station and Marble Arch station.
+```
+http://<server>:<port>/api/v1/test/route?from=Holborn&to=Baker+Street
 ```
 A JSON formated response is then provided as follows.
 ```javascript
 {
   "routePlan": {
-    "estimatedTime":6,
-    "route":[
-      {"id":"11","name":"Baker Street"},
-      {"id":"212","name":"Regent's Park"},
-      {"id":"192","name":"Oxford Circus"}
-    ]
-}}
+    "estimatedTime": 6,
+    "stations": {
+      "station": [
+        {
+          "id": 64,
+          "name": "Queensway",
+          "line": 2
+        },
+        {
+          "id": 63,
+          "name": "Lancaster Gate",
+          "line": 2
+        },
+        {
+          "id": 34,
+          "name": "Marble Arch",
+          "line": 2
+        }
+      ]}}
+}
 ```
 
 References:
