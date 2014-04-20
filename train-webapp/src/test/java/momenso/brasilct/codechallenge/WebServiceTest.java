@@ -2,7 +2,7 @@ package momenso.brasilct.codechallenge;
 
 import static org.junit.Assert.assertEquals;
 
-import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
 
@@ -37,7 +37,7 @@ public class WebServiceTest extends JerseyTest {
     			.request()
     			.get(RoutePlan.class);
     	
-    	assertEquals(45, plan.getEstimatedTime());
+    	assertEquals(60, plan.getEstimatedTime());
     }
     
     @Rule
@@ -45,7 +45,7 @@ public class WebServiceTest extends JerseyTest {
     
     @Test
     public void testRouteBetweenNonexistentStations() {
-    	exception.expect(BadRequestException.class);
+    	exception.expect(NotFoundException.class);
         
     	final WebTarget target = target("train-service/route");
     	target.queryParam("from", "Armenia")

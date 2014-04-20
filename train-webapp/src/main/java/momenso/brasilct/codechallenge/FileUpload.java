@@ -36,6 +36,12 @@ public class FileUpload {
 		saveFile(routesFileInputStream, routesFilePath);
 		String stationsFilePath = SERVER_UPLOAD_LOCATION_FOLDER + stationsContentDispositionHeader.getFileName();
 		saveFile(stationsFileInputStream, stationsFilePath);
+		
+		// persist graph in database
+		GraphDb.clear();
+		GraphDb graphDb = GraphDb.getInstance();
+		graphDb.index();
+		graphDb.load();
 
 		return "Map files saved";
 	}

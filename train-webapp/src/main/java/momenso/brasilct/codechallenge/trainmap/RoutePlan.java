@@ -6,6 +6,8 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.neo4j.graphdb.Node;
+
 @XmlRootElement
 public class RoutePlan {
 
@@ -14,8 +16,13 @@ public class RoutePlan {
 	
 	public RoutePlan() { }
 	
-	public RoutePlan(List<Vertex> route, int time) {
-		this.route.addAll(route);
+	public RoutePlan(Iterable<Node> route, int time) {
+		for (Node node : route) {
+			this.route.add(new Vertex(
+					Long.valueOf(node.getId()), 
+					node.getProperty("name").toString(),
+					(int) node.getProperty("line")));
+		}
 		this.setEstimatedTime(time);
 	}
 

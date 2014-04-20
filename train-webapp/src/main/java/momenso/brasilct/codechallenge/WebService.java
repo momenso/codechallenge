@@ -10,9 +10,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import momenso.brasilct.codechallenge.trainmap.Graph;
-import momenso.brasilct.codechallenge.trainmap.MapLoader;
-import momenso.brasilct.codechallenge.trainmap.MapRouter;
 import momenso.brasilct.codechallenge.trainmap.RoutePlan;
 import momenso.brasilct.codechallenge.trainmap.Vertex;
 
@@ -29,18 +26,22 @@ public class WebService {
 	public Response route(@QueryParam("from") final String from, @QueryParam("to") final String to) {
 		try
 		{
-			MapLoader mapLoader = MapLoader.getInstance();
-			
-			Vertex origin = mapLoader.findVertexByName(from);
-			Vertex destination = mapLoader.findVertexByName(to);
-			
-			Graph graph = mapLoader.getGraph();
-		    MapRouter router = new MapRouter(graph);
-		    router.execute(origin);
-		    List<Vertex> path = router.getPath(destination);
-			
-		    return Response.ok(new RoutePlan(path, router.getTime(destination))).build();
+		    GraphDb graphDb = GraphDb.getInstance();
+		    List<Vertex> origin = graphDb.find(from);
+		    List<Vertex> destination = graphDb.find(to);
+		    
+		    if (origin.isEmpty() || destination.isEmpty()) {
+		    	return Response
+						.status(404)
+						.type(MediaType.TEXT_PLAIN)
+						.entity("Specified station not found")
+						.build();
+		    }
+		    
+		    RoutePlan routePlan = graphDb.route(origin.get(0), destination.get(0));
+		    return Response.ok(routePlan).build();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response
 				.status(400)
 				.type(MediaType.TEXT_PLAIN)

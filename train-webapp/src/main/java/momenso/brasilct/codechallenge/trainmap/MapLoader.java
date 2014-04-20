@@ -26,9 +26,6 @@ public class MapLoader {
 	private List<Route> routes;
 	private List<Station> stations;
 	
-	private List<Vertex> nodes;
-	private List<Edge> edges;
-
 	private static MapLoader instance = null;
 
 	public static MapLoader getInstance() {
@@ -46,22 +43,6 @@ public class MapLoader {
 			loadStations();
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to load map.", e);
-		}
-		
-		nodes = new ArrayList<Vertex>();
-		for (Station station : stations) {
-			nodes.add(new Vertex(station.getId().toString(), station.getName()));
-		}
-		
-		edges = new ArrayList<Edge>();
-		for (Line line : lines) {
-			edges.add(new Edge(
-					line.toString(),
-					findVertexById(line.getStation1()),
-					findVertexById(line.getStation2()),
-					line.getLine(),
-					3 // default time to adjacent station
-			));
 		}
 	}
 
@@ -168,21 +149,20 @@ public class MapLoader {
 		}
 	}
 	
-	public Vertex findVertexById(int id) {
-		for (Vertex node : nodes) {
-			if (node.getId().equals(String.valueOf(id)))
-				return node;
+	/***
+	 * Returns Station that matches given Id. If such Id does not exists then throws an RuntimeException
+	 * @param id
+	 * @return
+	 */
+	public Station findStationById(int id) {
+		for (Station station : stations) {
+			if (station.getId() == id)
+				return station;
 		}
-		throw new RuntimeException(String.format("Vertex id=%d not found.", id));
+		
+		throw new RuntimeException(String.format("Station id=%s does not exists.", id));
 	}
-	
-	public Vertex findVertexByName(String name) {
-		for (Vertex node : nodes) {
-			if (node.getName().equals(name))
-				return node;
-		}
-		throw new RuntimeException(String.format("Vertex name=%s not found.", name));
-	}
+
 
 	public List<Line> getLines() {
 		return lines;
@@ -194,11 +174,5 @@ public class MapLoader {
 
 	public List<Station> getStations() {
 		return stations;
-	}
-	
-	public Graph getGraph() {
-		Graph graph = new Graph(nodes, edges);
-		
-		return graph;
 	}
 }
