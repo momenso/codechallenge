@@ -1,6 +1,7 @@
 package momenso.brasilct.codechallenge.trainmap;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /***
@@ -11,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Vertex {
 	private long id;
 	private String name;
@@ -24,17 +26,14 @@ public class Vertex {
 		this.setLine(line);
 	}
 
-	@XmlElement
 	public long getId() {
 		return id;
 	}
 
-	@XmlElement
 	public String getName() {
 		return name;
 	}
 	
-	@XmlElement
 	public int getLine() {
 		return line;
 	}

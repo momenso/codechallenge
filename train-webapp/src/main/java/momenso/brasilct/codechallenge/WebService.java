@@ -2,7 +2,6 @@ package momenso.brasilct.codechallenge;
 
 import java.util.List;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -18,11 +17,10 @@ import momenso.brasilct.codechallenge.trainmap.Vertex;
  */
 @Path("train-service")
 public class WebService {
-
+	
 	@GET
 	@Path("route")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes()
 	public Response route(@QueryParam("from") final String from, @QueryParam("to") final String to) {
 		try
 		{
@@ -49,7 +47,7 @@ public class WebService {
 				.build();
 		}
 	}
-	
+		
     /**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "text/plain" media type.

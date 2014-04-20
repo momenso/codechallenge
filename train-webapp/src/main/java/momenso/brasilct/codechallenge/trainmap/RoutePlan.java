@@ -3,15 +3,22 @@ package momenso.brasilct.codechallenge.trainmap;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.neo4j.graphdb.Node;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class RoutePlan {
-
+	
 	private int estimatedTime;
+
+	@XmlElementWrapper(name = "stations")
+	@XmlElement(name = "station")
 	private List<Vertex> route = new ArrayList<Vertex>();
 	
 	public RoutePlan() { }
@@ -26,7 +33,6 @@ public class RoutePlan {
 		this.setEstimatedTime(time);
 	}
 
-	@XmlElement(name="route")
 	public List<Vertex> getRoute() {
 		return route;
 	}
