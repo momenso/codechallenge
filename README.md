@@ -5,8 +5,8 @@ The application implements a simple web interface for importing the train map fi
 
 ![alt text](https://github.com/momenso/codechallenge/raw/graphdb/images/diagram.png "Overview Diagram")
 
-How to use
-----------
+Importing Map Files
+-------------------
 
 Once the application is started for the first time it is necessary to import the map files. This can be done by navigating to the server web address and upload the required CSV files.
 
@@ -14,23 +14,19 @@ Once the application is started for the first time it is necessary to import the
 
 When the upload is complete, the database is updated and the service is ready to respond to routing queries.
 
-The list of stations between an origin and destination can be obtained with the following REST call:
-```
-/api/v1/test/route/{origin}/{destination}
-```
-Where _{origin}_ and _{destination}_ are station IDs.
-
 A test method is available for querying routes between two train stations by name. In the following example we are requesting the route between Queensway station and Marble Arch station.
 ```
-http://<server>:<port>/api/v1/test/route?from=Holborn&to=Baker+Street
+http://<server>:<port>/api/v1/test/route?from=Queensway&to=Marble+Arch
 ```
 A JSON formated response is then provided as follows.
 ```javascript
 {
   "routePlan": {
-    "estimatedTime": 6,
-    "stations": {
-      "station": [
+    "travelTime": {
+      "minutes": 6
+    },
+    "mapPath": {
+      "stations": [
         {
           "id": 64,
           "name": "Queensway",
@@ -46,9 +42,25 @@ A JSON formated response is then provided as follows.
           "name": "Marble Arch",
           "line": 2
         }
-      ]}}
+      ]
+    }
+  }
 }
 ```
+
+REST API
+--------
+
+There are three interfaces available to determine the route between two train stations. You can obtain only the path between origin and destination, only the estimated travel time or everything combined.
+
+The summary of the REST API is listed below.
+```
+/api/v1/path/{origin}/{destination}
+/api/v1/time/{origin}/{destination}
+/api/v1/route/{origin}/{destination}
+```
+Where _{origin}_ and _{destination}_ are station IDs.
+
 
 References:
 
