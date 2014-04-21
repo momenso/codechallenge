@@ -98,6 +98,21 @@ public class GraphDb {
 			tx.close();
 		}
 	}
+	
+	public Vertex getStation(long id) {
+		Transaction tx = graphDb.beginTx();
+		try
+		{
+			Node node = graphDb.getNodeById(id);
+			Vertex station = new Vertex(
+            		Long.valueOf(node.getId()), 
+            		node.getProperty("name").toString(),
+            		(int) node.getProperty("line"));
+			return station;
+		} finally {
+			tx.close();
+		}
+	}
 		
 	public List<Vertex> find(String stationName)
 	{

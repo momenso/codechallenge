@@ -7,9 +7,9 @@ import static org.junit.Assert.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
-import javax.ws.rs.core.Response;
 
 import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.Vertex;
@@ -17,13 +17,35 @@ import momenso.brasilct.codechallenge.service.MapResource;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class MapResourceTest extends JerseyTest {
 	
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
+
 	@Override
     protected Application configure() {
         return new ResourceConfig(MapResource.class);
+    }
+
+    @Test
+    public void testStation() {
+    	final WebTarget target = target("/v1/station/201");
+    	Vertex station = target.request().get(Vertex.class);
+    	
+    	Vertex expected = new Vertex(201, "Baker Street", 7);
+    	assertEquals(expected, station);
+    }
+    
+    @Test
+    public void testStationNotFound() {
+    	exception.expect(NotFoundException.class);
+    	
+    	final WebTarget target = target("/v1/station/1000");
+    	target.request().get(Vertex.class);    	
     }
 
     @Test
@@ -46,4 +68,5 @@ public class MapResourceTest extends JerseyTest {
     	
     	assertEquals(18, plan.getEstimatedTime());
     }
+    
 }
