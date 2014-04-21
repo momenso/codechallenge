@@ -20,19 +20,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class MapPath {
 
 	@XmlElement(name = "stations")
-	private List<Vertex> path;
+	private List<StationNode> path;
 	
 	public MapPath() { }
 	
-	public MapPath(List<Vertex> path) {
-		this.path = new ArrayList<Vertex>(path);
+	public MapPath(List<StationNode> path) {
+		this.path = new ArrayList<StationNode>(path);
 	}
 
-	public List<Vertex> getPath() {
+	public List<StationNode> getPath() {
 		return path;
 	}
 
-	public void setPath(List<Vertex> path) {
+	public void setPath(List<StationNode> path) {
 		this.path = path;
 	}
 	

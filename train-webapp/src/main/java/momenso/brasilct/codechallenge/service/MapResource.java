@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 
 import momenso.brasilct.codechallenge.dao.GraphDb;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
-import momenso.brasilct.codechallenge.domain.Vertex;
+import momenso.brasilct.codechallenge.domain.StationNode;
 
 import org.neo4j.graphdb.NotFoundException;
 
@@ -23,7 +23,7 @@ public class MapResource {
 		try
 		{
 			GraphDb graphDb = GraphDb.getInstance();
-			Vertex station = graphDb.getStation(id);
+			StationNode station = graphDb.getStation(id);
 			
 			return Response.status(200).entity(station).build();
 		}

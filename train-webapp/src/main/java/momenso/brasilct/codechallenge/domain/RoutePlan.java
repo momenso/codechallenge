@@ -15,17 +15,14 @@ public class RoutePlan {
 	
 	private TravelTime travelTime;
 
-//	@XmlElementWrapper(name = "stations")
-//	@XmlElement(name = "station")
-//	private List<Vertex> route = new ArrayList<Vertex>();
 	private MapPath mapPath;
 	
 	public RoutePlan() { }
 	
 	public RoutePlan(Iterable<Node> route, int time) {
-		List<Vertex> path = new ArrayList<Vertex>();
+		List<StationNode> path = new ArrayList<StationNode>();
 		for (Node node : route) {
-			path.add(new Vertex(
+			path.add(new StationNode(
 					Long.valueOf(node.getId()), 
 					node.getProperty("name").toString(),
 					(int) node.getProperty("line")));

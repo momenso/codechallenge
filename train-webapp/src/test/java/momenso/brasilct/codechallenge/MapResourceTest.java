@@ -14,7 +14,7 @@ import javax.ws.rs.core.Application;
 import momenso.brasilct.codechallenge.domain.MapPath;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.TravelTime;
-import momenso.brasilct.codechallenge.domain.Vertex;
+import momenso.brasilct.codechallenge.domain.StationNode;
 import momenso.brasilct.codechallenge.service.MapResource;
 
 import org.glassfish.jersey.server.ResourceConfig;
@@ -36,9 +36,9 @@ public class MapResourceTest extends JerseyTest {
     @Test
     public void testStation() {
     	final WebTarget target = target("/v1/station/201");
-    	Vertex station = target.request().get(Vertex.class);
+    	StationNode station = target.request().get(StationNode.class);
     	
-    	Vertex expected = new Vertex(201, "Baker Street", 7);
+    	StationNode expected = new StationNode(201, "Baker Street", 7);
     	assertEquals(expected, station);
     }
         
@@ -47,7 +47,7 @@ public class MapResourceTest extends JerseyTest {
     	exception.expect(NotFoundException.class);
     	
     	final WebTarget target = target("/v1/station/1000");
-    	target.request().get(Vertex.class);    	
+    	target.request().get(StationNode.class);    	
     }
     
     @Test
@@ -55,10 +55,10 @@ public class MapResourceTest extends JerseyTest {
     	final WebTarget target = target("/v1/path/202/34");
     	MapPath path = target.request().get(MapPath.class);
     	
-    	List<Vertex> expected = new ArrayList<Vertex>();
-		expected.add(new Vertex(202, "Bond Street", 7));
-		expected.add(new Vertex(33, "Bond Street", 2));
-		expected.add(new Vertex(34, "Marble Arch", 2));
+    	List<StationNode> expected = new ArrayList<StationNode>();
+		expected.add(new StationNode(202, "Bond Street", 7));
+		expected.add(new StationNode(33, "Bond Street", 2));
+		expected.add(new StationNode(34, "Marble Arch", 2));
 		assertThat(path.getPath(), is(expected));
     }
     
@@ -74,18 +74,12 @@ public class MapResourceTest extends JerseyTest {
     public void testPlanner() {
     	final WebTarget target = target("/v1/route/201/34");
     	RoutePlan plan = target.request().get(RoutePlan.class);
-    	
-//    	List<Vertex> path = plan.getRoute();
-//    	System.out.println(path.size());
-//    	for (Vertex v : path) {
-//    		System.out.println(v);
-//    	}
-    	
-    	List<Vertex> expected = new ArrayList<Vertex>();
-		expected.add(new Vertex(201, "Baker Street", 7));
-		expected.add(new Vertex(202, "Bond Street", 7));
-		expected.add(new Vertex(33, "Bond Street", 2));
-		expected.add(new Vertex(34, "Marble Arch", 2));
+    	    	
+    	List<StationNode> expected = new ArrayList<StationNode>();
+		expected.add(new StationNode(201, "Baker Street", 7));
+		expected.add(new StationNode(202, "Bond Street", 7));
+		expected.add(new StationNode(33, "Bond Street", 2));
+		expected.add(new StationNode(34, "Marble Arch", 2));
 		assertThat(plan.getMapPath().getPath(), is(expected));
     	
     	assertEquals(18, plan.getTravelTime().getMinutes());

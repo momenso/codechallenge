@@ -13,14 +13,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Vertex {
+public class StationNode {
 	private long id;
 	private String name;
 	private int line;
 	
-	public Vertex() { }
+	public StationNode() { }
 
-	public Vertex(long id, String name, int line) {
+	public StationNode(long id, String name, int line) {
 		this.id = id;
 		this.name = name;
 		this.setLine(line);
@@ -60,7 +60,7 @@ public class Vertex {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Vertex other = (Vertex) obj;
+		StationNode other = (StationNode) obj;
 		if (id != other.id)
 			return false;
 		if (name == null) {

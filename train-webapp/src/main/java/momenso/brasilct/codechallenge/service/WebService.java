@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 
 import momenso.brasilct.codechallenge.dao.GraphDb;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
-import momenso.brasilct.codechallenge.domain.Vertex;
+import momenso.brasilct.codechallenge.domain.StationNode;
 
 /**
  * Root resource (exposed at "train-service" path)
@@ -26,8 +26,8 @@ public class WebService {
 		try
 		{
 		    GraphDb graphDb = GraphDb.getInstance();
-		    List<Vertex> origin = graphDb.find(from);
-		    List<Vertex> destination = graphDb.find(to);
+		    List<StationNode> origin = graphDb.find(from);
+		    List<StationNode> destination = graphDb.find(to);
 		    
 		    if (origin.isEmpty() || destination.isEmpty()) {
 		    	return Response

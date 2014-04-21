@@ -12,7 +12,7 @@ import momenso.brasilct.codechallenge.domain.Line;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.Station;
 import momenso.brasilct.codechallenge.domain.StationRef;
-import momenso.brasilct.codechallenge.domain.Vertex;
+import momenso.brasilct.codechallenge.domain.StationNode;
 
 import org.neo4j.graphalgo.GraphAlgoFactory;
 import org.neo4j.graphalgo.PathFinder;
@@ -52,7 +52,7 @@ public class GraphDb {
 		Util.deleteFileOrDirectory(new File(dbPath));
 	}
 	
-	public RoutePlan route(Vertex origin, Vertex destination)
+	public RoutePlan route(StationNode origin, StationNode destination)
 	{		
 		Transaction tx = graphDb.beginTx();
 		try
@@ -89,12 +89,12 @@ public class GraphDb {
 		}
 	}
 	
-	public Vertex getStation(long id) {
+	public StationNode getStation(long id) {
 		Transaction tx = graphDb.beginTx();
 		try
 		{
 			Node node = graphDb.getNodeById(id);
-			Vertex station = new Vertex(
+			StationNode station = new StationNode(
             		Long.valueOf(node.getId()), 
             		node.getProperty("name").toString(),
             		(int) node.getProperty("line"));
@@ -104,7 +104,7 @@ public class GraphDb {
 		}
 	}
 		
-	public List<Vertex> find(String stationName)
+	public List<StationNode> find(String stationName)
 	{
 		Label label = DynamicLabel.label("Station");
 		Transaction tx = graphDb.beginTx();
@@ -113,10 +113,10 @@ public class GraphDb {
 			ResourceIterator<Node> stations = graphDb.findNodesByLabelAndProperty(label, "name", stationName).iterator();
 		    try
 		    {
-		        List<Vertex> stationNodes = new ArrayList<Vertex>();
+		        List<StationNode> stationNodes = new ArrayList<StationNode>();
 		        while (stations.hasNext()) {
 		        	Node node = stations.next();
-		            stationNodes.add(new Vertex(
+		            stationNodes.add(new StationNode(
 		            		Long.valueOf(node.getId()), 
 		            		node.getProperty("name").toString(),
 		            		(int) node.getProperty("line")));
