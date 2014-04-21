@@ -1,4 +1,4 @@
-package momenso.brasilct.codechallenge.dao;
+package momenso.brasilct.codechallenge.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import momenso.brasilct.codechallenge.domain.Vertex;
 
 import org.neo4j.graphdb.Node;
 

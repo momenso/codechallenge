@@ -6,7 +6,7 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
 
-import momenso.brasilct.codechallenge.dao.RoutePlan;
+import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.service.WebService;
 
 import org.glassfish.jersey.server.ResourceConfig;

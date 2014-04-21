@@ -11,7 +11,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
-import momenso.brasilct.codechallenge.dao.RoutePlan;
+import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.Vertex;
 import momenso.brasilct.codechallenge.service.MapResource;
 

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import momenso.brasilct.codechallenge.domain.Line;
+import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.Station;
 import momenso.brasilct.codechallenge.domain.StationRef;
 import momenso.brasilct.codechallenge.domain.Vertex;

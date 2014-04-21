@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import momenso.brasilct.codechallenge.dao.GraphDb;
-import momenso.brasilct.codechallenge.dao.RoutePlan;
+import momenso.brasilct.codechallenge.domain.RoutePlan;
 
 @Path("v1")
 public class MapResource {

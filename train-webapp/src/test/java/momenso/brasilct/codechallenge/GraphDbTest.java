@@ -8,7 +8,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import momenso.brasilct.codechallenge.dao.GraphDb;
-import momenso.brasilct.codechallenge.dao.RoutePlan;
+import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.Vertex;
 
 import org.junit.After;
