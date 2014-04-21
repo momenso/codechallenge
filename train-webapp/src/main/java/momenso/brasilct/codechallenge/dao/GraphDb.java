@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import momenso.brasilct.codechallenge.Util;
 import momenso.brasilct.codechallenge.domain.Line;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.Station;
@@ -48,18 +49,7 @@ public class GraphDb {
 	}
 	
 	public static void clear() {
-		deleteFileOrDirectory(new File(dbPath));
-	}
-	
-	private static void deleteFileOrDirectory(final File file) {
-	    if (file.exists()) {
-	        if (file.isDirectory()) {
-	            for (File child : file.listFiles()) {
-	                deleteFileOrDirectory(child);
-	            }
-	        }
-	        file.delete();
-	    }
+		Util.deleteFileOrDirectory(new File(dbPath));
 	}
 	
 	public RoutePlan route(Vertex origin, Vertex destination)
