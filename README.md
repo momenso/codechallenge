@@ -5,8 +5,8 @@ The application implements a simple web interface for importing the train map fi
 
 ![alt text](https://github.com/momenso/codechallenge/raw/graphdb/images/diagram.png "Overview Diagram")
 
-How to use
-----------
+Importing Map Files
+-------------------
 
 Once the application is started for the first time it is necessary to import the map files. This can be done by navigating to the server web address and upload the required CSV files.
 
