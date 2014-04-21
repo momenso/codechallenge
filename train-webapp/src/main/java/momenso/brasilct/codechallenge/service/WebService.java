@@ -1,4 +1,4 @@
-package momenso.brasilct.codechallenge;
+package momenso.brasilct.codechallenge.service;
 
 import java.util.List;
 
@@ -9,8 +9,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import momenso.brasilct.codechallenge.trainmap.RoutePlan;
-import momenso.brasilct.codechallenge.trainmap.Vertex;
+import momenso.brasilct.codechallenge.dao.GraphDb;
+import momenso.brasilct.codechallenge.dao.RoutePlan;
+import momenso.brasilct.codechallenge.domain.Vertex;
 
 /**
  * Root resource (exposed at "train-service" path)

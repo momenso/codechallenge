@@ -1,4 +1,4 @@
-package momenso.brasilct.codechallenge;
+package momenso.brasilct.codechallenge.domain;
 
 public class StationRef {
 

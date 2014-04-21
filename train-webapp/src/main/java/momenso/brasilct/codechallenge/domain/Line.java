@@ -1,4 +1,4 @@
-package momenso.brasilct.codechallenge.trainmap;
+package momenso.brasilct.codechallenge.domain;
 
 /***
  * Bean for a train line segment between two stations of the same line

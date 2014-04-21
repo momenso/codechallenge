@@ -1,4 +1,4 @@
-package momenso.brasilct.codechallenge.trainmap;
+package momenso.brasilct.codechallenge.domain;
 
 /***
  * Bean for representing a line route

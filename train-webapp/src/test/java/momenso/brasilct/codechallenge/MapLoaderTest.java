@@ -1,7 +1,7 @@
 package momenso.brasilct.codechallenge;
 
 import junit.framework.TestCase;
-import momenso.brasilct.codechallenge.trainmap.MapLoader;
+import momenso.brasilct.codechallenge.dao.MapLoader;
 
 import org.junit.Test;
 

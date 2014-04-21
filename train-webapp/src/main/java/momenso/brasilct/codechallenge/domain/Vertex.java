@@ -1,4 +1,4 @@
-package momenso.brasilct.codechallenge.trainmap;
+package momenso.brasilct.codechallenge.domain;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

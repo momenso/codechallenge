@@ -1,10 +1,13 @@
-package momenso.brasilct.codechallenge.trainmap;
+package momenso.brasilct.codechallenge.dao;
 
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import momenso.brasilct.codechallenge.FileUpload;
+import momenso.brasilct.codechallenge.domain.Line;
+import momenso.brasilct.codechallenge.domain.Route;
+import momenso.brasilct.codechallenge.domain.Station;
+import momenso.brasilct.codechallenge.service.FileUpload;
 
 import org.supercsv.cellprocessor.ParseDouble;
 import org.supercsv.cellprocessor.ParseInt;

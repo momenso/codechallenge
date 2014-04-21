@@ -1,4 +1,4 @@
-package momenso.brasilct.codechallenge;
+package momenso.brasilct.codechallenge.dao;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,11 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import momenso.brasilct.codechallenge.trainmap.Line;
-import momenso.brasilct.codechallenge.trainmap.MapLoader;
-import momenso.brasilct.codechallenge.trainmap.RoutePlan;
-import momenso.brasilct.codechallenge.trainmap.Station;
-import momenso.brasilct.codechallenge.trainmap.Vertex;
+import momenso.brasilct.codechallenge.domain.Line;
+import momenso.brasilct.codechallenge.domain.Station;
+import momenso.brasilct.codechallenge.domain.StationRef;
+import momenso.brasilct.codechallenge.domain.Vertex;
 
 import org.neo4j.graphalgo.GraphAlgoFactory;
 import org.neo4j.graphalgo.PathFinder;
