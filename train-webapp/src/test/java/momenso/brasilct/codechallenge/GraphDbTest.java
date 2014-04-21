@@ -8,6 +8,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import momenso.brasilct.codechallenge.dao.GraphDb;
+import momenso.brasilct.codechallenge.domain.MapPath;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.Vertex;
 
@@ -39,9 +40,9 @@ public class GraphDbTest extends TestCase {
 		expected.add(new Vertex(26, "Liverpool Street", 2));
 		expected.add(new Vertex(31, "Bethnal Green", 2));
 		expected.add(new Vertex(32, "Mile End", 2));
-		assertThat(plan.getRoute(), is(expected));
+		assertThat(plan.getMapPath().getPath(), is(expected));
 		
-		assertEquals(6, plan.getEstimatedTime());
+		assertEquals(6, plan.getTravelTime().getMinutes());
 	}
 
 	@Test
@@ -62,10 +63,12 @@ public class GraphDbTest extends TestCase {
 		expected.add(new Vertex(139, "West Brompton", 4));
 		expected.add(new Vertex(135, "Earl's Court", 4));
 		expected.add(new Vertex(137, "High Street Kensington", 4));
-		assertThat(plan.getRoute(), is(expected));
+		
+		MapPath mapPath = plan.getMapPath();
+		assertThat(mapPath.getPath(), is(expected));
 
-		assertEquals(10, plan.getRoute().size()); // number of stations
-		assertEquals(27, plan.getEstimatedTime()); // total time
+		assertEquals(10, mapPath.getPath().size()); // number of stations
+		assertEquals(27, plan.getTravelTime().getMinutes()); // total time
 	}
 	
 	@Test
@@ -80,9 +83,9 @@ public class GraphDbTest extends TestCase {
 		expected.add(new Vertex(202, "Bond Street", 7));
 		expected.add(new Vertex(33, "Bond Street", 2));
 		expected.add(new Vertex(34, "Marble Arch", 2));
-		assertThat(plan.getRoute(), is(expected));
+		assertThat(plan.getMapPath().getPath(), is(expected));
 		
-		assertEquals(18, plan.getEstimatedTime());
+		assertEquals(18, plan.getTravelTime().getMinutes());
 	}
 	
 }

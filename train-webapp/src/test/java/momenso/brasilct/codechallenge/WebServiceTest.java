@@ -40,7 +40,7 @@ public class WebServiceTest extends JerseyTest {
     			.request()
     			.get(RoutePlan.class);
     	
-    	assertEquals(60, plan.getEstimatedTime());
+    	assertEquals(60, plan.getTravelTime().getMinutes());
     }
     
     @Rule

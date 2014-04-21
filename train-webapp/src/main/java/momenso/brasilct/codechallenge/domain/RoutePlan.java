@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.neo4j.graphdb.Node;
@@ -15,38 +13,40 @@ import org.neo4j.graphdb.Node;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RoutePlan {
 	
-	private int estimatedTime;
+	private TravelTime travelTime;
 
-	@XmlElementWrapper(name = "stations")
-	@XmlElement(name = "station")
-	private List<Vertex> route = new ArrayList<Vertex>();
+//	@XmlElementWrapper(name = "stations")
+//	@XmlElement(name = "station")
+//	private List<Vertex> route = new ArrayList<Vertex>();
+	private MapPath mapPath;
 	
 	public RoutePlan() { }
 	
 	public RoutePlan(Iterable<Node> route, int time) {
+		List<Vertex> path = new ArrayList<Vertex>();
 		for (Node node : route) {
-			this.route.add(new Vertex(
+			path.add(new Vertex(
 					Long.valueOf(node.getId()), 
 					node.getProperty("name").toString(),
 					(int) node.getProperty("line")));
 		}
-		this.setEstimatedTime(time);
+		this.setMapPath(new MapPath(path));
+		this.travelTime = new TravelTime(time);
 	}
 
-	public List<Vertex> getRoute() {
-		return route;
+	public TravelTime getTravelTime() {
+		return travelTime;
 	}
 
-	public void setRoute(List<Vertex> route) {
-		this.route.clear();
-		this.route.addAll(route);
+	public void setTravelTime(TravelTime travelTime) {
+		this.travelTime = travelTime;
 	}
 
-	public int getEstimatedTime() {
-		return estimatedTime;
+	public MapPath getMapPath() {
+		return mapPath;
 	}
 
-	public void setEstimatedTime(int time) {
-		this.estimatedTime = time;
+	public void setMapPath(MapPath mapPath) {
+		this.mapPath = mapPath;
 	}
 }

@@ -9,11 +9,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /***
- * Represents a path on the train network map
+ * Represents a path on the train network map.
  * 
  * @author momenso
  *
  */
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MapPath {

@@ -13,6 +13,7 @@ import javax.ws.rs.core.Application;
 
 import momenso.brasilct.codechallenge.domain.MapPath;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
+import momenso.brasilct.codechallenge.domain.TravelTime;
 import momenso.brasilct.codechallenge.domain.Vertex;
 import momenso.brasilct.codechallenge.service.MapResource;
 
@@ -60,6 +61,14 @@ public class MapResourceTest extends JerseyTest {
 		expected.add(new Vertex(34, "Marble Arch", 2));
 		assertThat(path.getPath(), is(expected));
     }
+    
+    @Test
+    public void testTravelTime() {
+    	final WebTarget target = target("/v1/time/202/34");
+    	TravelTime travelTime = target.request().get(TravelTime.class);
+    	
+    	assertEquals(15, travelTime.getMinutes());
+    }
 
     @Test
     public void testPlanner() {
@@ -77,9 +86,9 @@ public class MapResourceTest extends JerseyTest {
 		expected.add(new Vertex(202, "Bond Street", 7));
 		expected.add(new Vertex(33, "Bond Street", 2));
 		expected.add(new Vertex(34, "Marble Arch", 2));
-		assertThat(plan.getRoute(), is(expected));
+		assertThat(plan.getMapPath().getPath(), is(expected));
     	
-    	assertEquals(18, plan.getEstimatedTime());
+    	assertEquals(18, plan.getTravelTime().getMinutes());
     }
     
 }
