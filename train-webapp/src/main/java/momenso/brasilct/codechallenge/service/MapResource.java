@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 import org.neo4j.graphdb.NotFoundException;
 
 import momenso.brasilct.codechallenge.dao.GraphDb;
+import momenso.brasilct.codechallenge.domain.MapPath;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.Vertex;
 
@@ -37,6 +38,24 @@ public class MapResource {
 	}
 	
 	@GET
+	@Path("/path/{from}/{to}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response path(@PathParam("from") long from, @PathParam("to") long to) {
+		try
+		{
+			GraphDb graphDb = GraphDb.getInstance();
+			RoutePlan route = graphDb.route(from, to);
+			MapPath path = new MapPath(route.getRoute());
+			
+			return Response.status(200).entity(path).build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
+		}
+	}
+	
+	@GET
 	@Path("/route/{from}/{to}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response route(@PathParam("from") long from, @PathParam("to") long to) {
@@ -48,11 +67,8 @@ public class MapResource {
 			return Response.status(200).entity(path).build();
 		}
 		catch (Exception e) {
-			return Response
-				.status(500)
-				.type(MediaType.TEXT_PLAIN)
-				.entity(e.getMessage())
-				.build();
+			e.printStackTrace();
+			return Response.status(500).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
 		}
 	}
 

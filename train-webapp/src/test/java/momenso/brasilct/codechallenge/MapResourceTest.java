@@ -11,6 +11,7 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
 
+import momenso.brasilct.codechallenge.domain.MapPath;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.Vertex;
 import momenso.brasilct.codechallenge.service.MapResource;
@@ -39,13 +40,25 @@ public class MapResourceTest extends JerseyTest {
     	Vertex expected = new Vertex(201, "Baker Street", 7);
     	assertEquals(expected, station);
     }
-    
+        
     @Test
     public void testStationNotFound() {
     	exception.expect(NotFoundException.class);
     	
     	final WebTarget target = target("/v1/station/1000");
     	target.request().get(Vertex.class);    	
+    }
+    
+    @Test
+    public void testPath() {
+    	final WebTarget target = target("/v1/path/202/34");
+    	MapPath path = target.request().get(MapPath.class);
+    	
+    	List<Vertex> expected = new ArrayList<Vertex>();
+		expected.add(new Vertex(202, "Bond Street", 7));
+		expected.add(new Vertex(33, "Bond Street", 2));
+		expected.add(new Vertex(34, "Marble Arch", 2));
+		assertThat(path.getPath(), is(expected));
     }
 
     @Test
