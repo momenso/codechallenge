@@ -1,11 +1,11 @@
 package momenso.brasilct.codechallenge.domain;
 
-public class StationRef {
+public class Platform {
 
 	private int line;
 	private int id;
 
-	public StationRef(int line, int id) {
+	public Platform(int line, int id) {
 		this.line = line;
 		this.id = id;
 	}
@@ -48,7 +48,7 @@ public class StationRef {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		StationRef other = (StationRef) obj;
+		Platform other = (Platform) obj;
 		if (id != other.id)
 			return false;
 		if (line != other.line)

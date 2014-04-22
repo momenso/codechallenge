@@ -1,6 +1,8 @@
 package momenso.brasilct.codechallenge.dao;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +13,7 @@ import momenso.brasilct.codechallenge.Util;
 import momenso.brasilct.codechallenge.domain.Line;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.Station;
-import momenso.brasilct.codechallenge.domain.StationRef;
+import momenso.brasilct.codechallenge.domain.Platform;
 import momenso.brasilct.codechallenge.domain.StationNode;
 
 import org.neo4j.graphalgo.GraphAlgoFactory;
@@ -42,7 +44,10 @@ public class GraphDb {
 	
 	public static GraphDb getInstance() {
 		if (instance == null) {
+			clear();
 			instance = new GraphDb();
+			instance.index();
+			instance.load();
 		}
 		
 		return instance;
@@ -57,14 +62,7 @@ public class GraphDb {
 		Transaction tx = graphDb.beginTx();
 		try
 		{
-			PathFinder<WeightedPath> dijkstra = GraphAlgoFactory.dijkstra(
-			        PathExpanders.allTypesAndDirections(), "cost");
-			Node originNode = graphDb.getNodeById(origin.getId());
-			Node destinationNode = graphDb.getNodeById(destination.getId());
-			WeightedPath path = dijkstra.findSinglePath(originNode, destinationNode);
-			
-			RoutePlan result = new RoutePlan(path.nodes(), (int)path.weight());
-			return result;
+			return route(origin.getId(), destination.getId());
 		}
 		finally {
 			tx.close();
@@ -81,7 +79,7 @@ public class GraphDb {
 			        PathExpanders.allTypesAndDirections(), "cost");
 			WeightedPath path = dijkstra.findSinglePath(originNode, destinationNode);
 			
-			RoutePlan result = new RoutePlan(path.nodes(), (int)path.weight());
+			RoutePlan result = new RoutePlan(path.nodes(), (int)path.weight()-100);
 			return result;
 		}
 		finally {
@@ -159,12 +157,12 @@ public class GraphDb {
 		}
 	}
 	
-	private Map<StationRef, Node> nodes;
+	private Map<Platform, Node> nodes;
 	
-	private Node assignStation(Station station1, Line line, GraphDatabaseService graphDb) {
-		Label label = DynamicLabel.label("Station");
+	private Node assignPlatform(Station station1, Line line, GraphDatabaseService graphDb) {
+		Label label = DynamicLabel.label("Platform");
 		
-		StationRef ref1 = new StationRef(line.getLine(), station1.getId()); 
+		Platform ref1 = new Platform(line.getLine(), station1.getId()); 
 		Node node1 = nodes.get(ref1);
 		if (node1 == null) node1 = graphDb.createNode(label);
 		node1.setProperty("name", station1.getName());
@@ -179,20 +177,40 @@ public class GraphDb {
 	{
 		Transaction tx = graphDb.beginTx();
 		try
-		{	
-			// initialize Node cache
-			nodes = new HashMap<StationRef, Node>();
-			
+		{
 			MapLoader loader = MapLoader.getInstance();
+			
+			// create stations
+			Label label = DynamicLabel.label("Station");
+			for (Station station : loader.getStations()) {
+				Node node = graphDb.createNode(label);
+				node.setProperty("name", station.getName());
+				node.setProperty("id", station.getId());
+				node.setProperty("line", 0);
+				station.setNode(node);
+			}
+			
+			// initialize Node cache
+			nodes = new HashMap<Platform, Node>();
+			
 			for (Line line : loader.getLines()) {
 				Station station1 = loader.findStationById(line.getStation1());
-				Node node1 = assignStation(station1, line, graphDb);
+				Node node1 = assignPlatform(station1, line, graphDb);
 
 				Station station2 = loader.findStationById(line.getStation2());
-				Node node2 = assignStation(station2, line, graphDb);
+				Node node2 = assignPlatform(station2, line, graphDb);
 				
+				// connection between platforms
 				Relationship link = node1.createRelationshipTo(node2, RelationshipTypes.DIRECT);
 				link.setProperty("cost", 3);
+				
+				// connects station1 to its platform
+				Relationship link_s1 = node1.createRelationshipTo(station1.getNode(), RelationshipTypes.ACCESS);
+				link_s1.setProperty("cost", 50);
+				
+				// connects station2 to its platform
+				Relationship link_s2 = node2.createRelationshipTo(station2.getNode(), RelationshipTypes.ACCESS);
+				link_s2.setProperty("cost", 50);
 			}
 						
 			// create transfer link between lines
@@ -225,6 +243,7 @@ public class GraphDb {
 	
 	public enum RelationshipTypes implements RelationshipType
 	{
+		ACCESS,
 	    DIRECT,
 	    TRANSFER
 	}

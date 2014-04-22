@@ -1,5 +1,7 @@
 package momenso.brasilct.codechallenge.domain;
 
+import org.neo4j.graphdb.Node;
+
 /***
  * Bean representation of train station
  * 
@@ -15,6 +17,8 @@ public class Station {
 	private Double zone;
 	private Integer total_lines;
 	private Integer rail;
+	
+	private Node node; // neo4j support
 
 	public Integer getId() {
 		return id;
@@ -78,6 +82,14 @@ public class Station {
 
 	public void setRail(Integer rail) {
 		this.rail = rail;
+	}
+	
+	public Node getNode() {
+		return node;
+	}
+
+	public void setNode(Node node) {
+		this.node = node;
 	}
 	
 	@Override

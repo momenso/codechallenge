@@ -19,7 +19,7 @@ public class MapResource {
 	@GET
 	@Path("/station/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response stations(@PathParam("id") long id) {
+	public Response station(@PathParam("id") long id) {
 		try
 		{
 			GraphDb graphDb = GraphDb.getInstance();

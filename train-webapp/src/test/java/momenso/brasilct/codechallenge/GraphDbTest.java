@@ -1,33 +1,42 @@
 package momenso.brasilct.codechallenge;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
 import momenso.brasilct.codechallenge.dao.GraphDb;
 import momenso.brasilct.codechallenge.domain.MapPath;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.StationNode;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class GraphDbTest extends TestCase {
+public class GraphDbTest {
 	
-	private GraphDb graphDb;
+	private static GraphDb graphDb;
 	
-	@Before
-	public void setUp() {
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
 		graphDb = GraphDb.getInstance();
 	}
+		
+	@Test
+	public void testFindStation() {
+		StationNode station = graphDb.find("Bond Street").get(0);
+		assertEquals("Bond Street", station.getName());
+		assertEquals(0, station.getLine());
+	}
 	
-	@After
-	public void cleanUp() {
-		GraphDb.shutdown();
+	@Test
+	public void testFindStation2() {
+		StationNode station = graphDb.find("Holborn").get(0);
+		assertEquals("Holborn", station.getName());
+		assertEquals(0, station.getLine());
 	}
 
 	@Test
@@ -37,9 +46,11 @@ public class GraphDbTest extends TestCase {
 		RoutePlan plan = graphDb.route(origin, destination);
 		
 		List<StationNode> expected = new ArrayList<StationNode>();
-		expected.add(new StationNode(26, "Liverpool Street", 2));
-		expected.add(new StationNode(31, "Bethnal Green", 2));
-		expected.add(new StationNode(32, "Mile End", 2));
+		expected.add(new StationNode(136, "Liverpool Street", 0));
+		expected.add(new StationNode(332, "Liverpool Street", 2));
+		expected.add(new StationNode(337, "Bethnal Green", 2));
+		expected.add(new StationNode(338, "Mile End", 2));
+		expected.add(new StationNode(143, "Mile End", 0));
 		assertThat(plan.getMapPath().getPath(), is(expected));
 		
 		assertEquals(6, plan.getTravelTime().getMinutes());
@@ -48,41 +59,45 @@ public class GraphDbTest extends TestCase {
 	@Test
 	public void testDirectLongRouting() {
 		
-		long origin = 164; 			// Wimbledon
-		long destination = 137; 	// High Street Kensington
+		StationNode origin = graphDb.find("Wimbledon").get(0);
+		StationNode destination = graphDb.find("High Street Kensington").get(0);
 		RoutePlan plan = graphDb.route(origin, destination);
-						
+		
 		List<StationNode> expected = new ArrayList<StationNode>();
-		expected.add(new StationNode(164, "Wimbledon", 4));
-		expected.add(new StationNode(161, "Wimbledon Park", 4));
-		expected.add(new StationNode(143, "Southfields", 4));
-		expected.add(new StationNode(141, "East Putney", 4));
-		expected.add(new StationNode(142, "Putney Bridge", 4));
-		expected.add(new StationNode(149, "Parsons Green", 4));
-		expected.add(new StationNode(148, "Fulham Broadway", 4));
-		expected.add(new StationNode(139, "West Brompton", 4));
-		expected.add(new StationNode(135, "Earl's Court", 4));
-		expected.add(new StationNode(137, "High Street Kensington", 4));
+		expected.add(new StationNode(265, "Wimbledon", 0));
+		expected.add(new StationNode(470, "Wimbledon", 4));
+		expected.add(new StationNode(467, "Wimbledon Park", 4));
+		expected.add(new StationNode(449, "Southfields", 4));
+		expected.add(new StationNode(447, "East Putney", 4));
+		expected.add(new StationNode(448, "Putney Bridge", 4));
+		expected.add(new StationNode(455, "Parsons Green", 4));
+		expected.add(new StationNode(454, "Fulham Broadway", 4));
+		expected.add(new StationNode(445, "West Brompton", 4));
+		expected.add(new StationNode(441, "Earl's Court", 4));
+		expected.add(new StationNode(443, "High Street Kensington", 4));
+		expected.add(new StationNode(103, "High Street Kensington", 0));
 		
 		MapPath mapPath = plan.getMapPath();
 		assertThat(mapPath.getPath(), is(expected));
 
-		assertEquals(10, mapPath.getPath().size()); // number of stations
+		assertEquals(10+2, mapPath.getPath().size()); // number of stations
 		assertEquals(27, plan.getTravelTime().getMinutes()); // total time
 	}
-	
+
 	@Test
 	public void testNonDirectRouting() {
 		
-		long origin = 201; 		// Baker Street
-		long destination = 34;	// Marble Arch
+		StationNode origin = graphDb.find("Baker Street").get(0);
+		StationNode destination = graphDb.find("Marble Arch").get(0);
 		RoutePlan plan = graphDb.route(origin, destination);
 						
 		List<StationNode> expected = new ArrayList<StationNode>();
-		expected.add(new StationNode(201, "Baker Street", 7));
-		expected.add(new StationNode(202, "Bond Street", 7));
-		expected.add(new StationNode(33, "Bond Street", 2));
-		expected.add(new StationNode(34, "Marble Arch", 2));
+		expected.add(new StationNode(9, "Baker Street", 0));
+		expected.add(new StationNode(507, "Baker Street", 7));
+		expected.add(new StationNode(508, "Bond Street", 7));
+		expected.add(new StationNode(339, "Bond Street", 2));
+		expected.add(new StationNode(340, "Marble Arch", 2));
+		expected.add(new StationNode(141, "Marble Arch", 0));
 		assertThat(plan.getMapPath().getPath(), is(expected));
 		
 		assertEquals(18, plan.getTravelTime().getMinutes());

@@ -11,6 +11,7 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
 
+import momenso.brasilct.codechallenge.dao.GraphDb;
 import momenso.brasilct.codechallenge.domain.MapPath;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.TravelTime;
@@ -19,12 +20,14 @@ import momenso.brasilct.codechallenge.service.MapResource;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 public class MapResourceTest extends JerseyTest {
-	
+		
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
@@ -35,10 +38,10 @@ public class MapResourceTest extends JerseyTest {
 
     @Test
     public void testStation() {
-    	final WebTarget target = target("/v1/station/201");
+    	final WebTarget target = target("/v1/station/9");
     	StationNode station = target.request().get(StationNode.class);
     	
-    	StationNode expected = new StationNode(201, "Baker Street", 7);
+    	StationNode expected = new StationNode(9, "Baker Street", 0);
     	assertEquals(expected, station);
     }
         
@@ -51,38 +54,39 @@ public class MapResourceTest extends JerseyTest {
     }
     
     @Test
-    public void testPath() {
-    	final WebTarget target = target("/v1/path/202/34");
+    public void testPath() {    	
+    	final WebTarget target = target("/v1/path/25/141");
     	MapPath path = target.request().get(MapPath.class);
     	
     	List<StationNode> expected = new ArrayList<StationNode>();
-		expected.add(new StationNode(202, "Bond Street", 7));
-		expected.add(new StationNode(33, "Bond Street", 2));
-		expected.add(new StationNode(34, "Marble Arch", 2));
+		expected.add(new StationNode(25, "Bond Street", 0));
+		expected.add(new StationNode(339, "Bond Street", 2));
+		expected.add(new StationNode(340, "Marble Arch", 2));
+		expected.add(new StationNode(141, "Marble Arch", 0));
 		assertThat(path.getPath(), is(expected));
     }
     
     @Test
     public void testTravelTime() {
-    	final WebTarget target = target("/v1/time/202/34");
+    	final WebTarget target = target("/v1/time/25/141");
     	TravelTime travelTime = target.request().get(TravelTime.class);
     	
-    	assertEquals(15, travelTime.getMinutes());
+    	assertEquals(3, travelTime.getMinutes());
     }
 
     @Test
     public void testPlanner() {
-    	final WebTarget target = target("/v1/route/201/34");
+    	final WebTarget target = target("/v1/route/25/141");
     	RoutePlan plan = target.request().get(RoutePlan.class);
     	    	
     	List<StationNode> expected = new ArrayList<StationNode>();
-		expected.add(new StationNode(201, "Baker Street", 7));
-		expected.add(new StationNode(202, "Bond Street", 7));
-		expected.add(new StationNode(33, "Bond Street", 2));
-		expected.add(new StationNode(34, "Marble Arch", 2));
+		expected.add(new StationNode(25, "Bond Street", 0));
+		expected.add(new StationNode(339, "Bond Street", 2));
+		expected.add(new StationNode(340, "Marble Arch", 2));
+		expected.add(new StationNode(141, "Marble Arch", 0));
 		assertThat(plan.getMapPath().getPath(), is(expected));
     	
-    	assertEquals(18, plan.getTravelTime().getMinutes());
+    	assertEquals(3, plan.getTravelTime().getMinutes());
     }
     
 }
