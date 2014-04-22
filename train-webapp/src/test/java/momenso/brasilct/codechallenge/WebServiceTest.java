@@ -2,11 +2,15 @@ package momenso.brasilct.codechallenge;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
 
 import momenso.brasilct.codechallenge.domain.RoutePlan;
+import momenso.brasilct.codechallenge.domain.StationNode;
+import momenso.brasilct.codechallenge.domain.StationQueryResult;
 import momenso.brasilct.codechallenge.service.WebService;
 
 import org.glassfish.jersey.server.ResourceConfig;
@@ -41,6 +45,17 @@ public class WebServiceTest extends JerseyTest {
     			.get(RoutePlan.class);
     	
     	assertEquals(48, plan.getTravelTime().getMinutes());
+    }
+    
+    @Test
+    public void testQuery() {
+    	final WebTarget target = target(endPoint+"/station");
+    	StationQueryResult result = target
+    			.queryParam("name", "Holland Park")
+    			.request().get(StationQueryResult.class);
+    	
+    	assertEquals(1, result.getStations().size());
+    	assertEquals("Holland Park", result.getStations().get(0).getName());
     }
 
     @Rule

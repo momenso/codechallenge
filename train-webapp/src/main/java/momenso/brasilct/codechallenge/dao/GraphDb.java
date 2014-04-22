@@ -113,6 +113,7 @@ public class GraphDb {
 		Transaction tx = graphDb.beginTx();
 		try
 		{
+			
 			ResourceIterator<Node> stations = graphDb.findNodesByLabelAndProperty(label, "name", stationName).iterator();
 		    try
 		    {

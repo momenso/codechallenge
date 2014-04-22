@@ -12,12 +12,35 @@ import javax.ws.rs.core.Response;
 import momenso.brasilct.codechallenge.dao.GraphDb;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.StationNode;
+import momenso.brasilct.codechallenge.domain.StationQueryResult;
 
 /**
  * Root resource (exposed at "train-service" path)
  */
 @Path("v1/test")
 public class WebService {
+	
+	@GET
+	@Path("station")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response station(@QueryParam("name") final String name) {
+		try
+		{	
+		    GraphDb graphDb = GraphDb.getInstance();
+		    List<StationNode> station = graphDb.find(name);
+		    
+		    return Response.ok(new StationQueryResult(station)).build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return Response
+				.status(400)
+				.type(MediaType.TEXT_PLAIN)
+				.entity(e.getMessage())
+				.build();
+		}
+		    
+	}
 	
 	@GET
 	@Path("route")
