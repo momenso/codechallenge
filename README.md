@@ -28,17 +28,17 @@ A JSON formated response is then provided as follows.
     "mapPath": {
       "stations": [
         {
-          "id": 64,
+          "id": 370,
           "name": "Queensway",
           "line": 2
         },
         {
-          "id": 63,
+          "id": 369,
           "name": "Lancaster Gate",
           "line": 2
         },
         {
-          "id": 34,
+          "id": 340,
           "name": "Marble Arch",
           "line": 2
         }
