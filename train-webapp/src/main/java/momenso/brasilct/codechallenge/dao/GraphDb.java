@@ -1,8 +1,6 @@
 package momenso.brasilct.codechallenge.dao;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,9 +9,9 @@ import java.util.concurrent.TimeUnit;
 
 import momenso.brasilct.codechallenge.Util;
 import momenso.brasilct.codechallenge.domain.Line;
+import momenso.brasilct.codechallenge.domain.Platform;
 import momenso.brasilct.codechallenge.domain.RoutePlan;
 import momenso.brasilct.codechallenge.domain.Station;
-import momenso.brasilct.codechallenge.domain.Platform;
 import momenso.brasilct.codechallenge.domain.StationNode;
 
 import org.neo4j.graphalgo.GraphAlgoFactory;
