@@ -2,14 +2,11 @@ package momenso.brasilct.codechallenge;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
-
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
 
 import momenso.brasilct.codechallenge.domain.RoutePlan;
-import momenso.brasilct.codechallenge.domain.StationNode;
 import momenso.brasilct.codechallenge.domain.StationQueryResult;
 import momenso.brasilct.codechallenge.service.WebService;
 
