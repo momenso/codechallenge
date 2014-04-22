@@ -24,15 +24,10 @@ public class WebService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response route(@QueryParam("from") final String from, @QueryParam("to") final String to) {
 		try
-		{
-			System.out.println("Query route from "+from+" to "+to);
-			
+		{	
 		    GraphDb graphDb = GraphDb.getInstance();
 		    List<StationNode> origin = graphDb.find(from);
 		    List<StationNode> destination = graphDb.find(to);
-		    
-		    System.out.println("from="+origin.size());
-		    System.out.println("to="+destination.size());
 		    
 		    if (origin.isEmpty() || destination.isEmpty()) {
 		    	return Response

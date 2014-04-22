@@ -79,7 +79,14 @@ public class GraphDb {
 			        PathExpanders.allTypesAndDirections(), "cost");
 			WeightedPath path = dijkstra.findSinglePath(originNode, destinationNode);
 			
-			RoutePlan result = new RoutePlan(path.nodes(), (int)path.weight()-100);
+			// remove station entrance/exit nodes
+			List<Node> nodes = new ArrayList<Node>();
+			for (Node node : path.nodes()) {
+				if (node.getProperty("line").equals(0)) continue;
+				nodes.add(node);
+			}
+			
+			RoutePlan result = new RoutePlan(nodes, (int)path.weight()-100);
 			return result;
 		}
 		finally {

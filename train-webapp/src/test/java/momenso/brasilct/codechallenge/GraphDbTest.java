@@ -46,11 +46,9 @@ public class GraphDbTest {
 		RoutePlan plan = graphDb.route(origin, destination);
 		
 		List<StationNode> expected = new ArrayList<StationNode>();
-		expected.add(new StationNode(136, "Liverpool Street", 0));
 		expected.add(new StationNode(332, "Liverpool Street", 2));
 		expected.add(new StationNode(337, "Bethnal Green", 2));
 		expected.add(new StationNode(338, "Mile End", 2));
-		expected.add(new StationNode(143, "Mile End", 0));
 		assertThat(plan.getMapPath().getPath(), is(expected));
 		
 		assertEquals(6, plan.getTravelTime().getMinutes());
@@ -64,7 +62,6 @@ public class GraphDbTest {
 		RoutePlan plan = graphDb.route(origin, destination);
 		
 		List<StationNode> expected = new ArrayList<StationNode>();
-		expected.add(new StationNode(265, "Wimbledon", 0));
 		expected.add(new StationNode(470, "Wimbledon", 4));
 		expected.add(new StationNode(467, "Wimbledon Park", 4));
 		expected.add(new StationNode(449, "Southfields", 4));
@@ -75,12 +72,11 @@ public class GraphDbTest {
 		expected.add(new StationNode(445, "West Brompton", 4));
 		expected.add(new StationNode(441, "Earl's Court", 4));
 		expected.add(new StationNode(443, "High Street Kensington", 4));
-		expected.add(new StationNode(103, "High Street Kensington", 0));
 		
 		MapPath mapPath = plan.getMapPath();
 		assertThat(mapPath.getPath(), is(expected));
 
-		assertEquals(10+2, mapPath.getPath().size()); // number of stations
+		assertEquals(10, mapPath.getPath().size()); // number of stations
 		assertEquals(27, plan.getTravelTime().getMinutes()); // total time
 	}
 
@@ -92,12 +88,10 @@ public class GraphDbTest {
 		RoutePlan plan = graphDb.route(origin, destination);
 						
 		List<StationNode> expected = new ArrayList<StationNode>();
-		expected.add(new StationNode(9, "Baker Street", 0));
 		expected.add(new StationNode(507, "Baker Street", 7));
 		expected.add(new StationNode(508, "Bond Street", 7));
 		expected.add(new StationNode(339, "Bond Street", 2));
 		expected.add(new StationNode(340, "Marble Arch", 2));
-		expected.add(new StationNode(141, "Marble Arch", 0));
 		assertThat(plan.getMapPath().getPath(), is(expected));
 		
 		assertEquals(18, plan.getTravelTime().getMinutes());

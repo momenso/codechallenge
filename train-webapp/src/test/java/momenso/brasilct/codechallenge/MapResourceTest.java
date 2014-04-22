@@ -59,10 +59,8 @@ public class MapResourceTest extends JerseyTest {
     	MapPath path = target.request().get(MapPath.class);
     	
     	List<StationNode> expected = new ArrayList<StationNode>();
-		expected.add(new StationNode(25, "Bond Street", 0));
 		expected.add(new StationNode(339, "Bond Street", 2));
 		expected.add(new StationNode(340, "Marble Arch", 2));
-		expected.add(new StationNode(141, "Marble Arch", 0));
 		assertThat(path.getPath(), is(expected));
     }
     
@@ -80,10 +78,8 @@ public class MapResourceTest extends JerseyTest {
     	RoutePlan plan = target.request().get(RoutePlan.class);
     	    	
     	List<StationNode> expected = new ArrayList<StationNode>();
-		expected.add(new StationNode(25, "Bond Street", 0));
 		expected.add(new StationNode(339, "Bond Street", 2));
 		expected.add(new StationNode(340, "Marble Arch", 2));
-		expected.add(new StationNode(141, "Marble Arch", 0));
 		assertThat(plan.getMapPath().getPath(), is(expected));
     	
     	assertEquals(3, plan.getTravelTime().getMinutes());
